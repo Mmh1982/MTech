@@ -1,0 +1,55 @@
+﻿@model List<MTech.Objects.Item>
+@{
+    double _subtotal = 0;
+    double _total = 0;
+}
+<div class="table-responsive" style="padding-top:20px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width:40%;">Nombre</th>
+                <th style="width:15%;" class="text-center">Cantidad</th>
+                <th style="width:15%;" class="text-center">Unitario</th>
+                <th style="width:20%;" class="text-center">Sub Total</th>
+                <th style="width:10%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(MTech.Objects.Item ite in Model)
+            {
+                _subtotal = ite.Cantidad * ite.Precio;
+                _total += _subtotal;
+                <tr>
+                    <td>
+                        @ite.Nombre
+                    </td>
+                    <td class="text-center">
+                         @ite.Cantidad
+                    </td>
+                    <td class="text-right">
+                         @ite.Precio.ToString("$ ###,###,###,###.00")
+                    </td>
+                    <td class="text-right">
+                         @_subtotal.ToString("$ ###,###,###,###.00")
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-block" onclick="QuitarItem('@ite.Id');">Quitar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>                
+                <td colspan="3"  class="text-right" style="font-weight:bolder;">
+                    Total
+                </td>
+                <td class="text-right" style="font-weight:bolder;">
+                    @_total.ToString("$ ###,###,###,###.00")
+                </td>
+                <td>
+                
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

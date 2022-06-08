@@ -1,0 +1,65 @@
+﻿@using Newtonsoft.Json
+@model List<MTech.Objects.ShoppingCart>
+@{
+    double _total = 0;
+    double _totalGeneral = 0;
+}
+<div class="row">
+    <div class="col-sm-2" style="padding-top:20px;">
+        <button class="btn btn-success btn-block" onclick="NuevaCompra();">Nueva compra</button>
+    </div>
+    <div class="col-sm-12 table-responsive" style="padding-top:20px;">
+        <table class="table table-striped" style="width:100%;">
+            <thead>
+                <tr>                    
+                    <th style="width:25%;">Fecha compra</th>
+                    <th style="width:20%;">Total compra</th>
+                    <th style="width:15%;"></th>
+                    <th style="width:15%;"></th>
+                    <th style="width:15%;"></th>
+                    <th style="width:10%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(MTech.Objects.ShoppingCart ite in Model)
+                {
+                    _total = 0;
+                    foreach(MTech.Objects.Item det in ite.Items)
+                    {
+                        _total += (det.Cantidad * det.Precio);
+                    }
+                    _totalGeneral += _total;
+                    <tr>                        
+                        <td>@ite.FechaCompra.ToShortDateString()</td>
+                        <td class="text-right">@_total.ToString("$ ###,###,###,###.00")</td>
+                        <td>
+                            <button class="btn btn-warning btn-block" onclick="TotalItems('@ite.Id');">Total Items</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-info btn-block" onclick="TotalCompra('@ite.Id');">Total Compra</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-block" onclick="VerCompra('@ite.Id');">Ver detalle</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-block" onclick="EliminarCompra('@ite.Id');">Quitar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="text-right" style="font-weight:bolder;">
+                    <td>
+                        Total general
+                    </td>
+                    <td>
+                        @_totalGeneral.ToString("$ ###,###,###,###.00")
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    ShoppingCartList = @(Html.Raw(JsonConvert.SerializeObject(this.Model)));
+</script>

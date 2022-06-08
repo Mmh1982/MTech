@@ -1,0 +1,20 @@
+﻿@using Newtonsoft.Json
+@model List<MTech.Objects.ShoppingCart>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div id="divMain" class="col-12" style="padding-top:25px;">
+</div>
+<input type="hidden" id="Url_ListaCompras" value="@Url.Action("ListaCompras", "Home")" />
+<input type="hidden" id="Url_NuevaCompra" value="@Url.Action("NuevaCompra", "Home")" />
+<input type="hidden" id="Url_NuevoItem" value="@Url.Action("NuevoItem", "Home")" />
+<input type="hidden" id="Url_ElimiarItem" value="@Url.Action("ElimiarItem", "Home")" />
+<input type="hidden" id="Url_ListaItems" value="@Url.Action("ListaItems", "Home")" />
+<input type="hidden" id="Url_VerCompra" value="@Url.Action("VerCompra", "Home")" />
+<input type="hidden" id="Url_EliminarCompra" value="@Url.Action("EliminarCompra", "Home")" />
+<input type="hidden" id="Url_TotalItems" value="@Url.Action("TotalItems", "Home")" />
+<input type="hidden" id="Url_TotalCompra" value="@Url.Action("TotalCompra", "Home")" />
+
+<script type="text/javascript">
+    ShoppingCartList = @(Html.Raw(JsonConvert.SerializeObject(this.Model)));
+</script>
